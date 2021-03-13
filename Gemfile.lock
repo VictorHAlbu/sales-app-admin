@@ -259,7 +259,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
-  cancancan (~> 1.15.0)
+  cancancan
   capybara (>= 2.15)
   devise
   jbuilder (~> 2.7)
