@@ -1,16 +1,16 @@
 RailsAdmin.config do |config|
+  config.main_app_name = ["Representantes Comerciais", ""]
 
   ### Popular gems integration
-  config.parent_controller = 'ApplicationController' 
-  
+  config.parent_controller = "ApplicationController"
   ## == Devise ==
   config.authenticate_with do
     warden.authenticate! scope: :user
   end
   config.current_user_method(&:current_user)
-
+ 
   ## == CancanCan ==
-  config.authorize_with :cancancan
+  #config.authorize_with :cancancan
   
   ## == Pundit ==
   # config.authorize_with :pundit
@@ -38,5 +38,106 @@ RailsAdmin.config do |config|
     ## With an audit adapter, you can add:
     # history_index
     # history_show
+
+      config.model Sale do
+        create do
+          field  :client
+          field  :sale_date
+          field  :discount
+          field  :notes
+          field  :product_quantities
+      
+          field :user_id, :hidden do
+            default_value do
+              bindings[:view]._current_user.id
+            end
+          end
+        end
+      
+        edit do
+          field  :client
+          field  :sale_date
+          field  :discount
+          field  :notes
+          field  :product_quantities
+      
+          field :user_id, :hidden do
+            default_value do
+              bindings[:view]._current_user.id
+            end
+          end
+        end
+      end
+      
+      config.model Client do
+        create do
+          field  :name
+          field  :company_name
+          field  :document
+          field  :email
+          field  :phone
+          field  :notes
+          field  :status
+          field  :address
+      
+          field :user_id, :hidden do
+            default_value do
+              bindings[:view]._current_user.id
+            end
+          end
+        end
+      
+        edit do
+          field  :name
+          field  :company_name
+          field  :document
+          field  :email
+          field  :phone
+          field  :notes
+          field  :status
+          field  :address
+      
+      
+          field :user_id, :hidden do
+            default_value do
+              bindings[:view]._current_user.id
+            end
+          end
+        end
+      
+        list do
+          field  :name
+          field  :company_name
+          field  :document
+          field  :email
+          field  :phone
+          field  :notes
+          field  :status
+          field  :address
+      
+        end
+      end
+      
+      config.model ProductQuantity do
+        visible false
+      end
+      
+      config.model Address do
+        visible false
+      end
+      
+      
+      config.model ProductQuantity do
+        edit do
+          field :product
+          field :quantity
+      
+          field :user_id, :hidden do
+            default_value do
+              bindings[:view]._current_user.id
+            end
+          end
+        end
+      end
   end
 end
